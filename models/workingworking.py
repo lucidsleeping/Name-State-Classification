@@ -20,20 +20,12 @@ X = array[:,567:6201]
 y = array[:,-1]
 y=y.astype('int')
 X_train, X_validation, Y_train, Y_validation = train_test_split(X, y, test_size=0.20, random_state=100)
-# dim1 = len(X_validation)
-# dim2 = len(X_validation[0:1])
-# print(dim1,dim2)
 
-
-norm = [] 
-inputvec = []
-vecvec = []
-vec = []
-
+norm = []
 def normalization():
     data = [input()]
     for i in data:
-        if len(i)>=4:
+        if len(i)>=1:
             i.replace(".","#")
             i.replace(" ","#")
             zero = 30 - len(i)
@@ -44,7 +36,10 @@ def normalization():
         else:
             continue
 
-def data_creation():
+    return norm
+
+def data_creation(norm):
+    vec = []
     for data in norm:
         #appending name
         vec.append(data)
@@ -68,17 +63,19 @@ def data_creation():
         inputvec = np.array(inputvec[0:5634])
         vecvec.append(inputvec)
         vecvec = np.array(vecvec)
+        print(vecvec)
 
         return vecvec 
         
         
-normalization()
-vecvec = data_creation()
+norm = normalization()
+vecvec = data_creation(norm)
 
 models = []
 models.append(('RF',RandomForestClassifier(n_estimators=100,max_depth=50))) #max acc
 
-print(vecvec)
+# print(vecvec)clear
+
 for name, model in models:
     model.fit(X,y)
     pred=model.predict(vecvec) #pred=[int(p) for p in pred]
