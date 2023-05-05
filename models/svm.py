@@ -6,7 +6,7 @@ import pandas as pd
 from sklearn import svm
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix
-import csv
+
 
 # dataset= pd.read_csv("500.csv")
 dataset= pd.read_csv("dataset.csv")
@@ -16,10 +16,10 @@ X = array[:,567:6201]
 y = array[:,-1]
 y=y.astype('int')
 
-X_train, X_validation, Y_train, Y_validation = train_test_split(X, y, test_size=0.50, random_state=100)
+X_train, X_validation, Y_train, Y_validation = train_test_split(X, y, test_size=0.3, random_state=100)
 
 models = []
-models.append(('SVM',svm.LinearSVC()))
+models.append(('SVM',svm.SVC(kernel="rbf")))
 
 scoring = {'accuracy' : make_scorer(accuracy_score),
        	'precision' : make_scorer(precision_score),
@@ -29,6 +29,8 @@ scoring = {'accuracy' : make_scorer(accuracy_score),
 for name, model in models:
     model.fit(X_train,Y_train)
     pred=model.predict(X_validation) #pred=[int(p) for p in pred]
+    # print(pred)
+    # print(Y_validation)
     print(name)
     print(confusion_matrix(pred,Y_validation))
     print(classification_report(pred,Y_validation, zero_division=1))
@@ -44,3 +46,16 @@ for name, model in models:
 #     accuracy                           0.30       385
 #    macro avg       0.29      0.28      0.25       385
 # weighted avg       0.45      0.30      0.34       385
+
+
+#####poly
+#               precision    recall  f1-score   support
+
+#            1       0.68      0.29      0.41       139
+#            2       0.26      0.41      0.32        41
+#            3       0.11      0.56      0.19         9
+#            4       0.27      0.40      0.33        42
+
+#     accuracy                           0.35       231
+#    macro avg       0.33      0.42      0.31       231
+# weighted avg       0.51      0.35      0.37       231

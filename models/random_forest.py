@@ -8,6 +8,7 @@ from sklearn import svm
 
 dataset= pd.read_csv("dataset.csv")
 array = dataset.values
+input= pd.read_csv("dataset.csv")
 # print(array.shape)
 X = array[:,567:6201]
 y = array[:,-1]
@@ -16,7 +17,7 @@ X_train, X_validation, Y_train, Y_validation = train_test_split(X, y, test_size=
 
 
 models = []
-models.append(('RF',RandomForestClassifier(n_estimators=20,max_depth=100))) #max acc
+models.append(('RF',RandomForestClassifier(n_estimators=100,max_depth=50))) #max acc
 
 scoring = {'accuracy' : make_scorer(accuracy_score),
        	'precision' : make_scorer(precision_score),
